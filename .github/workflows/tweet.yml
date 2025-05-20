@@ -2,7 +2,7 @@ name: Tweet "Yukari Takeba"
 
 on:
   schedule:
-    - cron: '0 12 * * *'  # Every day at 12:00 UTC
+    - cron: '0 12 * * *'  # Runs every day at 12:00 UTC
   workflow_dispatch:
 
 jobs:
@@ -17,10 +17,13 @@ jobs:
       with:
         python-version: '3.x'
 
-    - name: Install requests
-      run: pip install requests
+    - name: Install tweepy
+      run: pip install tweepy
 
     - name: Run tweet script
       env:
-        BEARER_TOKEN: ${{ secrets.BEARER_TOKEN }}
+        API_KEY: ${{ secrets.API_KEY }}
+        API_KEY_SECRET: ${{ secrets.API_KEY_SECRET }}
+        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        ACCESS_TOKEN_SECRET: ${{ secrets.ACCESS_TOKEN_SECRET }}
       run: python tweet.py
