@@ -1,12 +1,25 @@
-import tweepy
 import os
+import requests
 
-auth = tweepy.OAuth1UserHandler(
-    os.environ["API_KEY"],
-    os.environ["API_KEY_SECRET"],
-    os.environ["ACCESS_TOKEN"],
-    os.environ["ACCESS_TOKEN_SECRET"]
-)
+BEARER_TOKEN = os.environ["BEARER_TOKEN"]
 
-api = tweepy.API(auth)
-api.update_status("Yukari Takeba")
+tweet_text = "Yukari Takeba"
+
+url = "https://api.twitter.com/2/tweets"
+
+headers = {
+    "Authorization": f"Bearer {BEARER_TOKEN}",
+    "Content-Type": "application/json"
+}
+
+payload = {
+    "text": tweet_text
+}
+
+response = requests.post(url, json=payload, headers=headers)
+
+if response.status_code == 201:
+    print("Tweeted successfully!")
+else:
+    print(f"Error: {response.status_code} - {response.text}")
+    response.raise_for_status()
