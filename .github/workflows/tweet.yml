@@ -2,7 +2,7 @@ name: Tweet "Yukari Takeba"
 
 on:
   schedule:
-    - cron: '0 12 * * *'  # Runs every day at 12:00 UTC
+    - cron: '0 16 * * *'  # Runs every day at 12:00 EDT
   workflow_dispatch:
 
 jobs:
