@@ -34,7 +34,6 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add daycount.txt
           git commit -m "Increment daycount"
-          git push
+          git push https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }} HEAD:main
         env:
-          # Use your PAT stored in secrets
-          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
