@@ -2,7 +2,7 @@ name: Daily Yukari Takeba Tweet
 
 on:
   schedule:
-    - cron: '0 17 * * *'  # Runs daily at 1 PM EDT / 17:00 UTC
+    - cron: '0 17 * * *'  # 12 PM EDT / 17:00 UTC
   workflow_dispatch:
 
 jobs:
@@ -35,13 +35,15 @@ jobs:
           git config user.name "fuukdle"
           git config user.email "fuukdlewebsite@gmail.com"
 
-          # Force Git to use your PAT, not the default bot identity
-          git remote set-url origin https://x-access-token:${PAT_TOKEN}@github.com/${{ github.repository }}
+          # Authenticate using PAT
+          git remote set-url origin https://x-access-token:${PAT_TOKEN}@github.com/fuukdle/takebot
 
-          # Pull in case anything changed upstream
+          # ✅ Stage the updated file BEFORE pulling to avoid rebase failure
+          git add daycount.txt
+
+          # Pull in latest changes with rebase
           git pull --rebase
 
-          # Commit and push any change to daycount.txt
-          git add daycount.txt
+          # Commit and push the daycount bump
           git commit -m "Increment daycount" || echo "No changes to commit"
           git push origin HEAD:main
