@@ -38,12 +38,12 @@ jobs:
           # Authenticate using PAT
           git remote set-url origin https://x-access-token:${PAT_TOKEN}@github.com/fuukdle/takebot
 
-          # ✅ Stage the updated file BEFORE pulling to avoid rebase failure
+          # ✅ Stage and commit FIRST to avoid rebase issues
           git add daycount.txt
+          git commit -m "Increment daycount" || echo "No changes to commit"
 
-          # Pull in latest changes with rebase
+          # ✅ Now safe to pull
           git pull --rebase
 
-          # Commit and push the daycount bump
-          git commit -m "Increment daycount" || echo "No changes to commit"
+          # ✅ Push the committed update
           git push origin HEAD:main
